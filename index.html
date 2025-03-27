@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Growth AI Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .platform-icon {
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .platform-icon:hover {
+            transform: scale(1.1);
+        }
+        .loading-spinner {
+            display: none;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container mx-auto max-w-6xl">
+        <!-- Header -->
+        <div class="glass rounded-xl p-6 mb-6">
+            <h1 class="text-3xl font-bold text-white mb-2">Social Growth AI Assistant</h1>
+            <p class="text-white/80">Optimize your social media presence with AI-powered insights</p>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Content Analysis Section -->
+            <div class="glass rounded-xl p-6">
+                <h2 class="text-xl font-semibold text-white mb-4">Content Analysis</h2>
+                <textarea id="contentInput" class="w-full h-32 p-3 rounded-lg bg-white/10 text-white placeholder-white/50 border border-white/20" placeholder="Paste your content here for analysis..."></textarea>
+                <div class="flex gap-3 mt-4">
+                    <select id="platformSelect" class="bg-white/10 text-white p-2 rounded-lg border border-white/20">
+                        <option value="instagram">Instagram</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="tiktok">TikTok</option>
+                    </select>
+                    <button onclick="analyzeContent()" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                        Analyze
+                        <i class="bi bi-arrow-right-circle ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Dashboard -->
+            <div class="glass rounded-xl p-6">
+                <h2 class="text-xl font-semibold text-white mb-4">Analytics Dashboard</h2>
+                <div id="analyticsResults" class="space-y-4 text-white">
+                    <div class="flex items-center justify-between p-3 bg-white/10 rounded-lg">
+                        <span>Engagement Rate</span>
+                        <span id="engagementRate">--%</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white/10 rounded-lg">
+                        <span>Best Posting Time</span>
+                        <span id="bestTime">--:-- AM</span>
+                    </div>
+                    <div id="suggestedHashtags" class="p-3 bg-white/10 rounded-lg">
+                        <p class="mb-2">Suggested Hashtags:</p>
+                        <div class="flex flex-wrap gap-2" id="hashtagContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optimization Suggestions -->
+            <div class="glass rounded-xl p-6">
+                <h2 class="text-xl font-semibold text-white mb-4">Content Optimization</h2>
+                <div id="suggestions" class="space-y-3 text-white">
+                    <div class="loading-spinner" id="loadingSpinner">
+                        <i class="bi bi-arrow-repeat text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automated Response Management -->
+            <div class="glass rounded-xl p-6">
+                <h2 class="text-xl font-semibold text-white mb-4">Auto-Response Management</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2 text-white">
+                        <input type="checkbox" id="autoReply" class="rounded">
+                        <label for="autoReply">Enable Smart Replies</label>
+                    </div>
+                    <div class="flex items-center gap-2 text-white">
+                        <input type="checkbox" id="autoDM" class="rounded">
+                        <label for="autoDM">Auto DM Response</label>
+                    </div>
+                    <textarea class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/50 border border-white/20 mt-3" placeholder="Customize your auto-response message..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeContent() {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const contentInput = document.getElementById('contentInput').value;
+            const platform = document.getElementById('platformSelect').value;
+            
+            loadingSpinner.style.display = 'block';
+            
+            // Simulate AI analysis with the API
+            fetch('https://r0c8kgwocscg8gsokogwwsw4.zetaverse.one/ai', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer X4rRwI2JgDNMiw2YwiCEBvJemm92',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    messages: [{
+                        role: "user",
+                        content: [{
+                            type: "text",
+                            text: `Analyze this social media content for ${platform}: ${contentInput}`
+                        }]
+                    }]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                updateAnalytics();
+                generateSuggestions();
+                loadingSpinner.style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                loadingSpinner.style.display = 'none';
+            });
+        }
+
+        function updateAnalytics() {
+            // Simulate analytics update
+            document.getElementById('engagementRate').textContent = Math.floor(Math.random() * 15) + '%';
+            document.getElementById('bestTime').textContent = `${Math.floor(Math.random() * 12)}:00 ${Math.random() > 0.5 ? 'AM' : 'PM'}`;
+            
+            const hashtags = ['#viral', '#trending', '#growth', '#socialmedia', '#marketing'];
+            const hashtagContainer = document.getElementById('hashtagContainer');
+            hashtagContainer.innerHTML = hashtags.map(tag => 
+                `<span class="bg-white/20 px-2 py-1 rounded-full text-sm">${tag}</span>`
+            ).join('');
+        }
+
+        function generateSuggestions() {
+            const suggestions = document.getElementById('suggestions');
+            const suggestionsContent = [
+                'Add more engaging questions to increase community interaction',
+                'Include a call-to-action in your post',
+                'Try using more trending keywords',
+                'Optimal post length detected for current platform'
+            ];
+            
+            suggestions.innerHTML = suggestionsContent.map(suggestion => 
+                `<div class="p-3 bg-white/10 rounded-lg">
+                    <i class="bi bi-lightbulb mr-2"></i>${suggestion}
+                </div>`
+            ).join('');
+        }
+
+        // Initialize the page
+        updateAnalytics();
+        generateSuggestions();
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
